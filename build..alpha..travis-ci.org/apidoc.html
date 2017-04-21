@@ -1,0 +1,161 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+    >on-finished (v2.3.0)</a>
+</h1>
+<h4>Execute a callback when a request closes, finishes, or errors</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.on-finished">module on-finished</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.on-finished.on-finished">
+            function <span class="apidocSignatureSpan"></span>on-finished
+            <span class="apidocSignatureSpan">(msg, listener)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.on-finished.isFinished">
+            function <span class="apidocSignatureSpan">on-finished.</span>isFinished
+            <span class="apidocSignatureSpan">(msg)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.on-finished" id="apidoc.module.on-finished">module on-finished</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.on-finished.on-finished" id="apidoc.element.on-finished.on-finished">
+        function <span class="apidocSignatureSpan"></span>on-finished
+        <span class="apidocSignatureSpan">(msg, listener)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function onFinished(msg, listener) {
+  if (isFinished(msg) !== false) {
+    defer(listener, null, msg)
+    return msg
+  }
+
+  // attach the listener to the message
+  attachListener(msg, listener)
+
+  return msg
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.on-finished.isFinished" id="apidoc.element.on-finished.isFinished">
+        function <span class="apidocSignatureSpan">on-finished.</span>isFinished
+        <span class="apidocSignatureSpan">(msg)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function isFinished(msg) {
+  var socket = msg.socket
+
+  if (typeof msg.finished === &#x27;boolean&#x27;) {
+    // OutgoingMessage
+    return Boolean(msg.finished || (socket &#x26;&#x26; !socket.writable))
+  }
+
+  if (typeof msg.complete === &#x27;boolean&#x27;) {
+    // IncomingMessage
+    return Boolean(msg.upgrade || !socket || !socket.readable || (msg.complete &#x26;&#x26; !msg.readable))
+  }
+
+  // don&#x27;t know
+  return undefined
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+})
+
+onFinished(req, function (err, req) {
+  // data is read unless there is err
+})
+```
+
+### onFinished.<span class="apidocCodeKeywordSpan">isFinished</span>(res)
+
+Determine if `res` is already finished. This would be useful to check and
+not even start certain operations if the response has already finished.
+
+### onFinished.isFinished(req)
+
+Determine if `req` is already finished. This would be useful to check and
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
